@@ -6,14 +6,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ganlink.pe.features.auth.presentation.login.DelayedView
+import com.ganlink.pe.features.auth.presentation.login.Login
 
 @Composable
 fun AppNav(padding : PaddingValues){
     val nav = rememberNavController()
 
-    NavHost(nav,startDestination = "login"){
+    NavHost(nav,startDestination = "delayed"){
+        composable(route = "delayed") {
+            DelayedView(nav)
+
+        }
         composable(route = "login") {
-            DelayedView()
+            Login()
         }
     }
 }
