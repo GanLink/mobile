@@ -1,4 +1,4 @@
-package com.ganlink.pe.ui.theme
+package com.ganlink.pe.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
