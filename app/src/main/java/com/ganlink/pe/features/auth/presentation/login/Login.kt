@@ -31,11 +31,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.ganlink.pe.R
 import com.ganlink.pe.core.ui.components.CustomSpacerVertical
 
 @Composable
-fun Login(){
+fun Login(onRegister : () -> Unit){
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
         Row(
@@ -98,7 +99,7 @@ fun Login(){
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .clickable {
-
+                        onRegister()
                 }
             )
         }
