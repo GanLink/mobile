@@ -36,7 +36,8 @@ import com.ganlink.pe.R
 import com.ganlink.pe.core.ui.components.CustomSpacerVertical
 
 @Composable
-fun Login(onRegister : () -> Unit){
+fun Login(onRegister : () -> Unit,
+          onLogin: () -> Unit){
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
         Row(
@@ -106,7 +107,9 @@ fun Login(onRegister : () -> Unit){
         CustomSpacerVertical()
         Row(horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()) {
-            Button(onClick = {}, modifier =
+            Button(onClick = {
+                onLogin()
+            }, modifier =
                 Modifier.background(color = MaterialTheme.colorScheme.background)) {
                 Text("Ok")
             }

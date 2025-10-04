@@ -10,6 +10,8 @@ import com.ganlink.pe.features.auth.presentation.login.DelayedView
 import com.ganlink.pe.features.auth.presentation.login.Login
 import com.ganlink.pe.features.auth.presentation.register.ConfirmRegister
 import com.ganlink.pe.features.auth.presentation.register.Register
+import com.ganlink.pe.features.farmhome.presentation.FarmHome
+import com.ganlink.pe.features.farmhome.presentation.FarmSpec
 
 @Composable
 fun AppNav(padding : PaddingValues){
@@ -21,9 +23,14 @@ fun AppNav(padding : PaddingValues){
 
         }
         composable(route = "login") {
-            Login {
-                nav.navigate("register")
-            }
+            Login(
+                onRegister = {
+                    nav.navigate("register")
+                },
+                onLogin = {
+                    nav.navigate("farm_home")
+                }
+            )
         }
         composable(route = "register") {
             Register{
@@ -39,6 +46,12 @@ fun AppNav(padding : PaddingValues){
                     popUpTo("confirm_register") { inclusive = true }
                 }
             }
+        }
+        composable("farm_home") {
+            FarmHome()
+        }
+        composable("farm_spec") {
+            FarmSpec()
         }
     }
 }
