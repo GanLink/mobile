@@ -48,7 +48,11 @@ fun AppNav(padding : PaddingValues){
             }
         }
         composable("farm_home") {
-            FarmHome()
+            FarmHome(
+                onFarmClick = {
+                    nav.navigate("farm_spec")
+                }
+            )
         }
         composable("farm_spec") {
             FarmSpec()

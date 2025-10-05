@@ -25,12 +25,14 @@ import androidx.compose.ui.unit.dp
 import com.ganlink.pe.R
 
 @Composable
-fun FarmCard(){
+fun FarmCard(onClick : ()->Unit){
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)
-            .clickable {  },
+            .clickable {
+                onClick()
+            },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {

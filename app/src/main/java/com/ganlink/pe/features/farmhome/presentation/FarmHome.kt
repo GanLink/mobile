@@ -79,7 +79,7 @@ fun FarmHome(
             Spacer(modifier = Modifier.height(16.dp))
 
 
-            FarmCard()
+            FarmCard(onFarmClick)
         }
     }
 }
