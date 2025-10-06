@@ -69,7 +69,7 @@ fun FarmHome(
                 )
 
                 Icon(
-                    painter = painterResource(id = R.drawable.image1), // Usa tu ícono de granja
+                    painter = painterResource(id = R.drawable.image1),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(80.dp)

@@ -41,7 +41,6 @@ fun FarmSpec(
                 .padding(padding)
                 .padding(horizontal = 20.dp, vertical = 16.dp)
         ) {
-            // Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -67,7 +66,7 @@ fun FarmSpec(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    // Settings button
+
                     IconButton(onClick = onSettingsClick) {
                         Icon(
                             imageVector = Icons.Default.Settings,
@@ -76,7 +75,7 @@ fun FarmSpec(
                         )
                     }
 
-                    // Add button
+
                     IconButton(onClick = onAddClick) {
                         Icon(
                             imageVector = Icons.Default.Add,
@@ -85,7 +84,6 @@ fun FarmSpec(
                         )
                     }
 
-                    // Remove button
                     IconButton(onClick = onRemoveClick) {
                         Icon(
                             imageVector = Icons.Default.Close,

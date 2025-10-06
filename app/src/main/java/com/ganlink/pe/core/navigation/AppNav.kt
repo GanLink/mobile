@@ -10,6 +10,7 @@ import com.ganlink.pe.features.auth.presentation.login.DelayedView
 import com.ganlink.pe.features.auth.presentation.login.Login
 import com.ganlink.pe.features.auth.presentation.register.ConfirmRegister
 import com.ganlink.pe.features.auth.presentation.register.Register
+import com.ganlink.pe.features.farmhome.presentation.BovinueForm
 import com.ganlink.pe.features.farmhome.presentation.FarmHome
 import com.ganlink.pe.features.farmhome.presentation.FarmSpec
 
@@ -55,7 +56,12 @@ fun AppNav(padding : PaddingValues){
             )
         }
         composable("farm_spec") {
-            FarmSpec()
+            FarmSpec(onAddClick = {
+                nav.navigate("bovinue_form")
+            })
+        }
+        composable("bovinue_form"){
+            BovinueForm()
         }
     }
 }
