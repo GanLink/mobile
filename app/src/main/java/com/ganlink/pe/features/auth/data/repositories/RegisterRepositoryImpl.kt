@@ -7,8 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class RegisterRepositoryImpl @Inject constructor(registerService: RegisterService) : RegisterRepository {
+class RegisterRepositoryImpl @Inject constructor(private val registerService: RegisterService) : RegisterRepository {
     override suspend fun sendRegister(user: UserRegister) = withContext(Dispatchers.IO) {
-
+        registerService.registration(user)
     }
 }

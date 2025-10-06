@@ -8,6 +8,6 @@ import retrofit2.http.POST
 
 interface RegisterService {
     @Headers("Content-Type: application/json")
-    @POST("")
-    suspend fun registration(@Body userRegister: UserRegister) : Response<>
+    @POST("api/v1/Authorization/sign-up")
+    suspend fun registration(@Body userRegister: UserRegister)
 }

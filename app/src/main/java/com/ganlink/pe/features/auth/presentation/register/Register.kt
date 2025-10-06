@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DriveFileRenameOutline
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.FileCopy
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockPerson
@@ -37,7 +38,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.ganlink.pe.R
@@ -53,6 +53,7 @@ fun Register(
     val firstName by registerViewModel.firstName.collectAsState()
     val lastName by registerViewModel.lastName.collectAsState()
     val ruc by registerViewModel.ruc.collectAsState()
+    val email by registerViewModel.email.collectAsState() // ← nuevo campo
     val password by registerViewModel.password.collectAsState()
     val passwordConf by registerViewModel.passwordConfirmation.collectAsState()
 
@@ -61,12 +62,17 @@ fun Register(
     val isUsernameError = username.length > 10 || username.isBlank()
     val isFirstNameError = firstName.length > 10 || firstName.isBlank()
     val isLastNameError = lastName.length > 20 || lastName.isBlank()
-    val isRucError = ruc.length > 20 || ruc.isBlank() || !ruc.all { it.isDigit() }
+    val isRucError = ruc.isBlank() ||
+            ruc.length != 11 ||
+            !ruc.all { it.isDigit() } ||
+            !(ruc.startsWith("10") || ruc.startsWith("20"))
+    val isEmailError = email.isBlank() ||
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     val isPasswordError = password.length > 20 || password.isBlank()
     val isPasswordConfError = passwordConf != password || passwordConf.isBlank()
 
     val allValid = !isUsernameError && !isFirstNameError && !isLastNameError &&
-            !isRucError && !isPasswordError && !isPasswordConfError
+            !isRucError && !isEmailError && !isPasswordError && !isPasswordConfError
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -166,7 +172,23 @@ fun Register(
             )
             if (showErrors && isRucError) {
                 Text(
-                    "Debe contener solo números y máx. 20 caracteres",
+                    "Debe iniciar con 10 o 20, tener 11 dígitos y solo números",
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.labelSmall
+                )
+            }
+
+            OutlinedTextField(
+                value = email,
+                onValueChange = { registerViewModel.setEmail(it) },
+                placeholder = { Text("Expl: example@mail.com") },
+                label = { Text("Email") },
+                leadingIcon = { Icon(Icons.Default.Email, null) },
+                isError = showErrors && isEmailError
+            )
+            if (showErrors && isEmailError) {
+                Text(
+                    "Formato de correo inválido",
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.labelSmall
                 )
@@ -211,8 +233,12 @@ fun Register(
             Button(
                 onClick = {
                     showErrors = true
-                    if (allValid) onRegister()
+                    if (allValid){
+                        onRegister()
+                        registerViewModel.registerUser()
+                    }
                 },
+                enabled = true,
                 modifier = Modifier.background(MaterialTheme.colorScheme.background)
             ) {
                 Text("Ok")
@@ -220,5 +246,9 @@ fun Register(
         }
     }
 }
+
+
+
+
 
 
