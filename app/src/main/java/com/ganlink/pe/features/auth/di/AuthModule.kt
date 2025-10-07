@@ -1,6 +1,7 @@
 package com.ganlink.pe.features.auth.di
 
 import com.ganlink.pe.core.networking.ApiConstModule
+import com.ganlink.pe.features.auth.data.remote.services.LoginService
 import com.ganlink.pe.features.auth.data.remote.services.RegisterService
 import dagger.Module
 import dagger.Provides
@@ -25,5 +26,10 @@ object AuthModule {
     @Singleton
     fun providesRegisterService(retrofit: Retrofit) : RegisterService{
         return retrofit.create(RegisterService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun providesLoginService(retrofit : Retrofit) : LoginService{
+        return retrofit.create(LoginService::class.java)
     }
 }
