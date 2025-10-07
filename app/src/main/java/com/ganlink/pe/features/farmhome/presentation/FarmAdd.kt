@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.ganlink.pe.core.ui.components.CustomSpacerVertical
 import com.ganlink.pe.features.farmhome.presentation.models.MainActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +31,8 @@ fun FarmAdd(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp),
+            .padding(top = 140.dp , bottom = 20.dp,
+                start = 20.dp, end = 20.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start
     ) {
@@ -41,9 +43,8 @@ fun FarmAdd(
             style = MaterialTheme.typography.bodyMedium
         )
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(32.dp))
 
-        // Alias
         OutlinedTextField(
             value = alias,
             onValueChange = vm::setAlias,
@@ -58,7 +59,6 @@ fun FarmAdd(
 
         Spacer(Modifier.height(12.dp))
 
-        // MainActivity (Select)
         ExposedDropdownMenuBox(
             expanded = activityMenuExpanded,
             onExpandedChange = { activityMenuExpanded = !activityMenuExpanded }
@@ -96,7 +96,6 @@ fun FarmAdd(
 
         Spacer(Modifier.height(12.dp))
 
-        // OwnerDni
         OutlinedTextField(
             value = ownerDni,
             onValueChange = vm::setOwnerDni,
@@ -112,7 +111,6 @@ fun FarmAdd(
 
         Spacer(Modifier.height(20.dp))
 
-        // Botones
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Button(onClick = {
                 if (vm.validate()) {

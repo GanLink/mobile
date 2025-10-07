@@ -19,7 +19,6 @@ class FarmAddViewModel @Inject constructor() : ViewModel() {
     private val _mainActivity = MutableStateFlow<MainActivity?>(null)
     val mainActivity: StateFlow<MainActivity?> = _mainActivity.asStateFlow()
 
-    // Errores
     private val _aliasError = MutableStateFlow<String?>(null)
     val aliasError: StateFlow<String?> = _aliasError.asStateFlow()
 

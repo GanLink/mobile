@@ -9,9 +9,11 @@ import com.ganlink.pe.features.auth.presentation.login.DelayedView
 import com.ganlink.pe.features.auth.presentation.login.Login
 import com.ganlink.pe.features.auth.presentation.register.ConfirmRegister
 import com.ganlink.pe.features.auth.presentation.register.Register
+import com.ganlink.pe.features.bovinuesystem.presentation.BovinueDetails
 import com.ganlink.pe.features.bovinuesystem.presentation.BovinueForm
 import com.ganlink.pe.features.farmhome.presentation.FarmAdd
 import com.ganlink.pe.features.farmhome.presentation.FarmHome
+import com.ganlink.pe.features.farmhome.presentation.FarmSettings
 import com.ganlink.pe.features.farmhome.presentation.FarmSpec
 
 @Composable
@@ -62,12 +64,25 @@ fun AppNav(padding : PaddingValues){
             FarmAdd()
         }
         composable("farm_spec") {
-            FarmSpec(onAddClick = {
+            FarmSpec(
+                onAddClick = {
                 nav.navigate("bovinue_form")
-            })
+            },
+                onSettingsClick = {
+                    nav.navigate("farm_settings")
+                },
+                onCardClick = {
+                    nav.navigate("bovinue_details")
+                })
+        }
+        composable("farm_settings"){
+            FarmSettings()
         }
         composable("bovinue_form"){
             BovinueForm()
+        }
+        composable("bovinue_details") {
+            BovinueDetails()
         }
     }
 }

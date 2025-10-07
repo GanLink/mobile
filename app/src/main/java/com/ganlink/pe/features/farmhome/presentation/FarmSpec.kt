@@ -96,7 +96,6 @@ fun FarmSpec(
 
             Spacer(modifier = Modifier.height(28.dp))
 
-            // Section title
             Text(
                 text = "Batches",
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -106,12 +105,11 @@ fun FarmSpec(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Example card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(160.dp)
-                    .clickable { /* TODO: onCardClick() */ },
+                    .clickable { onCardClick() },
                 shape = RoundedCornerShape(20.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
@@ -119,7 +117,6 @@ fun FarmSpec(
                 Row(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    // Image section
                     Box(
                         modifier = Modifier
                             .weight(0.9f)
@@ -135,8 +132,6 @@ fun FarmSpec(
                             modifier = Modifier.fillMaxSize()
                         )
                     }
-
-                    // Info section
                     Column(
                         modifier = Modifier
                             .weight(1.1f)

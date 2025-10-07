@@ -40,7 +40,7 @@ fun FarmCard(onClick : ()->Unit){
             modifier = Modifier.fillMaxSize()
         ) {
             Image(
-                painter = painterResource(id = R.drawable.image1), // Cambia por tu recurso
+                painter = painterResource(id = R.drawable.image1),
                 contentDescription = "Farm Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
