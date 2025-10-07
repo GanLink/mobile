@@ -2,7 +2,6 @@ package com.ganlink.pe.core.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -10,7 +9,8 @@ import com.ganlink.pe.features.auth.presentation.login.DelayedView
 import com.ganlink.pe.features.auth.presentation.login.Login
 import com.ganlink.pe.features.auth.presentation.register.ConfirmRegister
 import com.ganlink.pe.features.auth.presentation.register.Register
-import com.ganlink.pe.features.farmhome.presentation.BovinueForm
+import com.ganlink.pe.features.bovinuesystem.presentation.BovinueForm
+import com.ganlink.pe.features.farmhome.presentation.FarmAdd
 import com.ganlink.pe.features.farmhome.presentation.FarmHome
 import com.ganlink.pe.features.farmhome.presentation.FarmSpec
 
@@ -52,8 +52,14 @@ fun AppNav(padding : PaddingValues){
             FarmHome(
                 onFarmClick = {
                     nav.navigate("farm_spec")
+                },
+                onAddFarmClick = {
+                    nav.navigate("farm_add")
                 }
             )
+        }
+        composable("farm_add"){
+            FarmAdd()
         }
         composable("farm_spec") {
             FarmSpec(onAddClick = {
