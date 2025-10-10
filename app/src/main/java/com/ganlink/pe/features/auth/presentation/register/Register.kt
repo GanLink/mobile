@@ -78,40 +78,29 @@ fun Register(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.padding(top = 80.dp))
+        Spacer(modifier = Modifier.padding(top = 50.dp))
 
-        Row(
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+                .clip(RoundedCornerShape(200.dp))
+                .background(MaterialTheme.colorScheme.secondaryContainer)
+                .size(width = 150.dp, height = 50.dp),
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(200.dp))
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
-                    .size(width = 150.dp, height = 80.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    "Register",
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            }
-
-            CustomSpacer()
-            Image(
-                painter = painterResource(R.drawable.image1),
-                contentDescription = null
+            Text(
+                "Register",
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.secondary
             )
         }
 
-        CustomSpacerVertical()
-
+        Image(
+            painter = painterResource(R.drawable.image1),
+            contentDescription = null,
+            modifier = Modifier.size(160.dp)
+        )
         Column(
-            modifier = Modifier.width(240.dp),
+            modifier = Modifier.width(380.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
@@ -120,7 +109,8 @@ fun Register(
                 placeholder = { Text("Expl: Destroyer2009") },
                 label = { Text("Username") },
                 leadingIcon = { Icon(Icons.Default.Man, null) },
-                isError = showErrors && isUsernameError
+                isError = showErrors && isUsernameError,
+                modifier = Modifier.fillMaxWidth()
             )
             if (showErrors && isUsernameError) {
                 Text(
@@ -136,7 +126,8 @@ fun Register(
                 placeholder = { Text("Expl: Pepe") },
                 label = { Text("First Name") },
                 leadingIcon = { Icon(Icons.Default.DriveFileRenameOutline, null) },
-                isError = showErrors && isFirstNameError
+                isError = showErrors && isFirstNameError,
+                modifier = Modifier.fillMaxWidth()
             )
             if (showErrors && isFirstNameError) {
                 Text(
@@ -152,7 +143,8 @@ fun Register(
                 placeholder = { Text("Expl: McCartney") },
                 label = { Text("Last Name") },
                 leadingIcon = { Icon(Icons.Default.PersonAdd, null) },
-                isError = showErrors && isLastNameError
+                isError = showErrors && isLastNameError,
+                modifier = Modifier.fillMaxWidth()
             )
             if (showErrors && isLastNameError) {
                 Text(
@@ -168,7 +160,8 @@ fun Register(
                 placeholder = { Text("Expl: 10123456789") },
                 label = { Text("RUC") },
                 leadingIcon = { Icon(Icons.Default.FileCopy, null) },
-                isError = showErrors && isRucError
+                isError = showErrors && isRucError,
+                modifier = Modifier.fillMaxWidth()
             )
             if (showErrors && isRucError) {
                 Text(
@@ -184,7 +177,8 @@ fun Register(
                 placeholder = { Text("Expl: example@mail.com") },
                 label = { Text("Email") },
                 leadingIcon = { Icon(Icons.Default.Email, null) },
-                isError = showErrors && isEmailError
+                isError = showErrors && isEmailError,
+                modifier = Modifier.fillMaxWidth()
             )
             if (showErrors && isEmailError) {
                 Text(
@@ -201,7 +195,8 @@ fun Register(
                 label = { Text("Password") },
                 leadingIcon = { Icon(Icons.Default.Lock, null) },
                 visualTransformation = PasswordVisualTransformation(),
-                isError = showErrors && isPasswordError
+                isError = showErrors && isPasswordError,
+                modifier = Modifier.fillMaxWidth()
             )
             if (showErrors && isPasswordError) {
                 Text(
@@ -218,7 +213,8 @@ fun Register(
                 label = { Text("Confirm Password") },
                 leadingIcon = { Icon(Icons.Default.LockPerson, null) },
                 visualTransformation = PasswordVisualTransformation(),
-                isError = showErrors && isPasswordConfError
+                isError = showErrors && isPasswordConfError,
+                modifier = Modifier.fillMaxWidth()
             )
             if (showErrors && isPasswordConfError) {
                 Text(

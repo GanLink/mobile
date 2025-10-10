@@ -1,4 +1,4 @@
-package com.ganlink.pe.features.farmhome.domain.models
+package com.ganlink.pe.features.farmmanagement.domain.models
 
 data class CreateFarmDto(
     val alias: String,

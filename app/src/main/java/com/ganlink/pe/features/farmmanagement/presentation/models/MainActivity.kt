@@ -1,4 +1,4 @@
-package com.ganlink.pe.features.farmhome.presentation.models
+package com.ganlink.pe.features.farmmanagement.presentation.models
 
 enum class MainActivity(val code: Int) {
     CARNE(1),

@@ -1,4 +1,4 @@
-package com.ganlink.pe.features.farmhome.presentation
+package com.ganlink.pe.features.farmmanagement.presentation.farmspec
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -9,8 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.ganlink.pe.core.ui.components.CustomSpacerVertical
-import com.ganlink.pe.features.farmhome.presentation.models.MainActivity
+import com.ganlink.pe.features.farmmanagement.presentation.models.MainActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

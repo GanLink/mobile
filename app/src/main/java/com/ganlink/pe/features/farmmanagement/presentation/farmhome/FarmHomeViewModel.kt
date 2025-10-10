@@ -1,4 +1,4 @@
-package com.ganlink.pe.features.farmhome.presentation
+package com.ganlink.pe.features.farmmanagement.presentation.farmhome
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

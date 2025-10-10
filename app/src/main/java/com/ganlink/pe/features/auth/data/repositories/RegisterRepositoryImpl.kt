@@ -9,6 +9,9 @@ import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(private val registerService: RegisterService) : RegisterRepository {
     override suspend fun sendRegister(user: UserRegister) = withContext(Dispatchers.IO) {
-        registerService.registration(user)
+        val response = registerService.registration(user)
+        if(response.code() == 500){
+
+        }
     }
 }

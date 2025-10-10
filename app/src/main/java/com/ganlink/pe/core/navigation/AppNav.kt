@@ -11,10 +11,10 @@ import com.ganlink.pe.features.auth.presentation.register.ConfirmRegister
 import com.ganlink.pe.features.auth.presentation.register.Register
 import com.ganlink.pe.features.bovinuesystem.presentation.BovinueDetails
 import com.ganlink.pe.features.bovinuesystem.presentation.BovinueForm
-import com.ganlink.pe.features.farmhome.presentation.FarmAdd
-import com.ganlink.pe.features.farmhome.presentation.FarmHome
-import com.ganlink.pe.features.farmhome.presentation.FarmSettings
-import com.ganlink.pe.features.farmhome.presentation.FarmSpec
+import com.ganlink.pe.features.farmmanagement.presentation.farmspec.FarmAdd
+import com.ganlink.pe.features.farmmanagement.presentation.farmhome.FarmHome
+import com.ganlink.pe.features.farmmanagement.presentation.farmsettings.FarmSettings
+import com.ganlink.pe.features.farmmanagement.presentation.farmsettings.FarmSpec
 
 @Composable
 fun AppNav(padding : PaddingValues){

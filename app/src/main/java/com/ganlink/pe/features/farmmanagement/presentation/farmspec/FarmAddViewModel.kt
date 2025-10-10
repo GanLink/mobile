@@ -1,7 +1,7 @@
-package com.ganlink.pe.features.farmhome.presentation
+package com.ganlink.pe.features.farmmanagement.presentation.farmspec
 
 import androidx.lifecycle.ViewModel
-import com.ganlink.pe.features.farmhome.presentation.models.MainActivity
+import com.ganlink.pe.features.farmmanagement.presentation.models.MainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
