@@ -26,9 +26,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ganlink.pe.R
+import com.ganlink.pe.features.farmmanagement.domain.models.FarmDto
 
 @Composable
-fun FarmCard(onClick : ()->Unit){
+fun FarmCard(farm : FarmDto,
+    onClick : ()->Unit){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,7 +66,7 @@ fun FarmCard(onClick : ()->Unit){
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Farm name",
+                    text = farm.alias,
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold
                     ),
@@ -72,7 +74,7 @@ fun FarmCard(onClick : ()->Unit){
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = "Farm description",
+                    text = farm.mainActivity,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

@@ -1,15 +1,20 @@
 package com.ganlink.pe.features.farmmanagement.presentation.farmspec
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ganlink.pe.features.auth.data.local.dao.UserDao
 import com.ganlink.pe.features.farmmanagement.presentation.models.MainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FarmAddViewModel @Inject constructor() : ViewModel() {
+class FarmAddViewModel @Inject constructor(
+    private val dao: UserDao
+) : ViewModel() {
     private val _alias = MutableStateFlow("")
     val alias: StateFlow<String> = _alias.asStateFlow()
 
@@ -47,5 +52,11 @@ class FarmAddViewModel @Inject constructor() : ViewModel() {
         _aliasError.value = null
         _dniError.value = null
         _activityError.value = null
+    }
+
+    fun getUserId(){
+        viewModelScope.launch {
+            val userDao = dao.fetchAllUsers()
+        }
     }
 }

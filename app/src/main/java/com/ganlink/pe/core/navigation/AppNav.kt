@@ -2,9 +2,12 @@ package com.ganlink.pe.core.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.ganlink.pe.features.auth.presentation.login.DelayedView
 import com.ganlink.pe.features.auth.presentation.login.Login
 import com.ganlink.pe.features.auth.presentation.register.ConfirmRegister
@@ -13,6 +16,7 @@ import com.ganlink.pe.features.bovinuesystem.presentation.BovinueDetails
 import com.ganlink.pe.features.bovinuesystem.presentation.BovinueForm
 import com.ganlink.pe.features.farmmanagement.presentation.farmspec.FarmAdd
 import com.ganlink.pe.features.farmmanagement.presentation.farmhome.FarmHome
+import com.ganlink.pe.features.farmmanagement.presentation.farmhome.FarmHomeViewModel
 import com.ganlink.pe.features.farmmanagement.presentation.farmsettings.FarmSettings
 import com.ganlink.pe.features.farmmanagement.presentation.farmsettings.FarmSpec
 
@@ -30,8 +34,8 @@ fun AppNav(padding : PaddingValues){
                 onRegister = {
                     nav.navigate("register")
                 },
-                onLogin = {
-                    nav.navigate("farm_home")
+                onLogin = { id, username ->
+                    nav.navigate("farm_home/$id/$username")
                 }
             )
         }
@@ -50,15 +54,31 @@ fun AppNav(padding : PaddingValues){
                 }
             }
         }
-        composable("farm_home") {
-            FarmHome(
-                onFarmClick = {
-                    nav.navigate("farm_spec")
+        composable("farm_home/{id}/{username}",
+            arguments = listOf(
+                navArgument("id"){
+                    type = NavType.IntType
                 },
-                onAddFarmClick = {
-                    nav.navigate("farm_add")
+                navArgument("username"){
+                    type = NavType.StringType
                 }
-            )
+            )) { backStackEntry ->
+            backStackEntry.arguments?.let { arguments ->
+                val id = arguments.getInt("id")
+                val username = arguments.getString("username")
+                val farmHomeViewModel : FarmHomeViewModel = hiltViewModel()
+                farmHomeViewModel.getFarmsById(id)
+                FarmHome(
+                    viewModel= farmHomeViewModel,
+                    username = username!!,
+                    onFarmClick = {
+                        nav.navigate("farm_spec")
+                    },
+                    onAddFarmClick = {
+                        nav.navigate("farm_add")
+                    }
+                )
+            }
         }
         composable("farm_add"){
             FarmAdd()

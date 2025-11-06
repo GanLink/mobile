@@ -16,14 +16,6 @@ import javax.inject.Singleton
 object AuthModule {
     @Provides
     @Singleton
-    fun providesRetrofit() : Retrofit{
-        return Retrofit.Builder()
-            .baseUrl(ApiConstModule.BASE_API_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-    @Provides
-    @Singleton
     fun providesRegisterService(retrofit: Retrofit) : RegisterService{
         return retrofit.create(RegisterService::class.java)
     }

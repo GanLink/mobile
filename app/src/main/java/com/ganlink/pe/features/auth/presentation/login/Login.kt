@@ -51,10 +51,11 @@ import kotlinx.coroutines.launch
 fun Login(
     loginViewModel: LoginViewModel = hiltViewModel(),
     onRegister: () -> Unit,
-    onLogin: () -> Unit
+    onLogin: (Int, String) -> Unit
 ) {
     val username by loginViewModel.username.collectAsState()
     val password by loginViewModel.password.collectAsState()
+    val user by loginViewModel.user.collectAsState()
 
     val scope = rememberCoroutineScope()
     val isVisible = remember { mutableStateOf(false) }
@@ -144,7 +145,11 @@ fun Login(
                 onClick = {
                     scope.launch {
                         val ok = loginViewModel.login()
-                        if (ok) onLogin() else showError.value = true
+                        if(user == null){
+                            showError.value = true
+                            return@launch
+                        }
+                        if (ok) onLogin(user!!.id, user!!.username) else showError.value = true
                     }
                 },
                 modifier = Modifier.background(color = MaterialTheme.colorScheme.background)

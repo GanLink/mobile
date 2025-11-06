@@ -14,7 +14,7 @@ import com.ganlink.pe.features.farmmanagement.presentation.models.MainActivity
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FarmAdd(
-    vm: FarmAddViewModel = hiltViewModel()
+    vm: FarmAddViewModel = hiltViewModel(),
     //onSubmit: (alias: String, mainActivityCode: Int, ownerDni: String) -> Unit
 ) {
     val alias by vm.alias.collectAsState()
