@@ -7,13 +7,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.ganlink.pe.core.navigation.AppNav
 import com.ganlink.pe.core.ui.theme.GanLinkTheme
+import com.ganlink.pe.features.farmmanagement.presentation.farmsettings.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -21,11 +23,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            GanLinkTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    AppNav(innerPadding)
-                }
-            }
+            GanLinkApp()
+        }
+    }
+}
+
+@Composable
+private fun GanLinkApp() {
+    val themeViewModel: ThemeViewModel = hiltViewModel()
+    val darkTheme by themeViewModel.darkTheme.collectAsState(initial = false)
+
+    GanLinkTheme(darkTheme = darkTheme) {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            AppNav(innerPadding)
         }
     }
 }

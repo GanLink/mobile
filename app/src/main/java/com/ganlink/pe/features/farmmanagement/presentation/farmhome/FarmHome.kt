@@ -26,7 +26,7 @@ fun FarmHome(
     viewModel: FarmHomeViewModel,
     username: String = "Username",
     onAddFarmClick: () -> Unit = {},
-    onFarmClick: () -> Unit = {}
+    onFarmClick: (Int) -> Unit = {}
 ) {
 
     val farms by viewModel.farms.collectAsState()
@@ -108,7 +108,13 @@ fun FarmHome(
                     ) { farm ->
                         FarmCard(
                             farm = farm,
-                            onClick = { onFarmClick() }
+                            onClick = {
+                                viewModel.selectFarm(farm)
+                                onFarmClick(farm.id)
+                            },
+                            onDelete = {
+                                viewModel.deleteFarm(farm.id)
+                            }
                         )
                     }
                 }

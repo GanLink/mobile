@@ -3,13 +3,14 @@ package com.ganlink.pe.features.auth.data.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.ganlink.pe.features.auth.data.local.models.UserEntity
 
 @Dao
 interface UserDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(vararg entity: UserEntity)
 
     @Delete

@@ -14,11 +14,11 @@ import com.ganlink.pe.features.auth.presentation.register.ConfirmRegister
 import com.ganlink.pe.features.auth.presentation.register.Register
 import com.ganlink.pe.features.bovinuesystem.presentation.BovinueDetails
 import com.ganlink.pe.features.bovinuesystem.presentation.BovinueForm
-import com.ganlink.pe.features.farmmanagement.presentation.farmspec.FarmAdd
+import com.ganlink.pe.features.farmmanagement.presentation.farmadd.FarmAdd
 import com.ganlink.pe.features.farmmanagement.presentation.farmhome.FarmHome
 import com.ganlink.pe.features.farmmanagement.presentation.farmhome.FarmHomeViewModel
 import com.ganlink.pe.features.farmmanagement.presentation.farmsettings.FarmSettings
-import com.ganlink.pe.features.farmmanagement.presentation.farmsettings.FarmSpec
+import com.ganlink.pe.features.farmmanagement.presentation.farmspec.FarmSpec
 
 @Composable
 fun AppNav(padding : PaddingValues){
@@ -71,19 +71,29 @@ fun AppNav(padding : PaddingValues){
                 FarmHome(
                     viewModel= farmHomeViewModel,
                     username = username!!,
-                    onFarmClick = {
-                        nav.navigate("farm_spec")
+                    onFarmClick = { farmId ->
+                        nav.navigate("farm_spec/$farmId")
                     },
                     onAddFarmClick = {
-                        nav.navigate("farm_add")
+                        nav.navigate("farm_add/${farmHomeViewModel.userId}")
                     }
                 )
             }
         }
-        composable("farm_add"){
+        composable(
+            route = "farm_add/{userId}",
+            arguments = listOf(
+                navArgument("userId") { type = NavType.IntType }
+            )
+        ) {
             FarmAdd()
         }
-        composable("farm_spec") {
+        composable(
+            route = "farm_spec/{farmId}",
+            arguments = listOf(
+                navArgument("farmId") { type = NavType.IntType }
+            )
+        ) {
             FarmSpec(
                 onAddClick = {
                 nav.navigate("bovinue_form")

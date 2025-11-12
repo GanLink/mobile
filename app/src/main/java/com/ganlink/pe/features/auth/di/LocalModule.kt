@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.ganlink.pe.core.database.AppDatabase
 import com.ganlink.pe.features.auth.data.local.dao.UserDao
+import com.ganlink.pe.features.farmmanagement.data.local.dao.CreatedFarmIdDao
+import com.ganlink.pe.features.farmmanagement.data.local.dao.FarmDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,11 +23,23 @@ object LocalModule {
             context,
             klass = AppDatabase::class.java,
             "ganlink"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
     @Provides
     @Singleton
     fun providesUserDao(db : AppDatabase) : UserDao{
         return db.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providesFarmDao(db: AppDatabase): FarmDao {
+        return db.farmDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providesCreatedFarmIdDao(db: AppDatabase): CreatedFarmIdDao {
+        return db.createdFarmIdDao()
     }
 }

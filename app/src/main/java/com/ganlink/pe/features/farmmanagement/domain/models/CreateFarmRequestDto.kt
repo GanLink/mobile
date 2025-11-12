@@ -1,10 +1,9 @@
 package com.ganlink.pe.features.farmmanagement.domain.models
 
-data class FarmDto(
+data class CreateFarmRequestDto(
     val alias: String,
     val description: String,
-    val id: Int = 0,
-    val mainActivity: String,
+    val mainActivity: Int,
     val ownerDni: String,
     val userId: Int
 )

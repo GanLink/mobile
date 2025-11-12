@@ -1,10 +1,19 @@
-package com.ganlink.pe.features.farmmanagement.presentation.farmsettings
+package com.ganlink.pe.features.farmmanagement.presentation.farmspec
 
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -12,6 +21,8 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,17 +32,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ganlink.pe.R
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FarmSpec(
-    farmAlias: String = "Los Sauces",
-    balance: String = "$ 12,340.00",
+    viewModel: FarmSpecViewModel = hiltViewModel(),
     onSettingsClick: () -> Unit = {},
     onAddClick: () -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onCardClick: () -> Unit = {}
 ) {
+    val farm by viewModel.farm.collectAsState()
+    val alias = farm?.alias ?: "Selecciona una granja"
+    val mainActivity = farm?.mainActivity ?: "Sin actividad"
+    val description = farm?.description?.ifBlank { "Sin descripción disponible" }
+        ?: "Sin descripción disponible"
+    val owner = farm?.ownerDni ?: "Sin propietario"
+
     Scaffold { padding ->
         Column(
             modifier = Modifier
@@ -46,17 +64,22 @@ fun FarmSpec(
             ) {
                 Column {
                     Text(
-                        text = balance,
+                        text = mainActivity,
                         style = MaterialTheme.typography.headlineMedium.copy(
                             fontWeight = FontWeight.Bold
                         ),
                         color = MaterialTheme.colorScheme.primary
                     )
                     Text(
-                        text = farmAlias,
+                        text = alias,
                         style = MaterialTheme.typography.titleMedium.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
+                    )
+                    Text(
+                        text = "Propietario: $owner",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
@@ -82,7 +105,10 @@ fun FarmSpec(
                         )
                     }
 
-                    IconButton(onClick = onRemoveClick) {
+                    IconButton(onClick = {
+                        viewModel.clearSelectedFarm()
+                        onRemoveClick()
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Remove",
@@ -138,7 +164,7 @@ fun FarmSpec(
                     ) {
                         Column {
                             Text(
-                                text = "Batch name",
+                                text = alias,
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     fontWeight = FontWeight.Bold
                                 ),
@@ -146,14 +172,15 @@ fun FarmSpec(
                             )
                             Spacer(modifier = Modifier.height(6.dp))
                             Text(
-                                text = "Some description or short summary goes here.",
+                                text = description,
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 3
                             )
                         }
 
                         Text(
-                            text = "Last update: 2d ago",
+                            text = "ID: ${farm?.id ?: "-"}",
                             style = MaterialTheme.typography.labelSmall.copy(
                                 color = MaterialTheme.colorScheme.outline
                             )

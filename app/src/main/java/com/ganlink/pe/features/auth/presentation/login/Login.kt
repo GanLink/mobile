@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -55,7 +56,7 @@ fun Login(
 ) {
     val username by loginViewModel.username.collectAsState()
     val password by loginViewModel.password.collectAsState()
-    val user by loginViewModel.user.collectAsState()
+    val isLoading by loginViewModel.isLoading.collectAsState()
 
     val scope = rememberCoroutineScope()
     val isVisible = remember { mutableStateOf(false) }
@@ -143,18 +144,29 @@ fun Login(
         ) {
             Button(
                 onClick = {
+                    if (isLoading) return@Button
+                    showError.value = false
                     scope.launch {
-                        val ok = loginViewModel.login()
-                        if(user == null){
+                        val user = loginViewModel.login()
+                        if (user != null) {
+                            onLogin(user.id, user.username)
+                        } else {
                             showError.value = true
-                            return@launch
                         }
-                        if (ok) onLogin(user!!.id, user!!.username) else showError.value = true
                     }
                 },
+                enabled = !isLoading,
                 modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
             ) {
-                Text("Ok")
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                } else {
+                    Text("Ok")
+                }
             }
         }
 
