@@ -60,7 +60,7 @@ fun FarmSettings(
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             Text(
-                "Ajustes generales de la granja",
+                "Ajustes generales",
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Medium)
             )
 

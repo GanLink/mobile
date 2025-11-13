@@ -59,11 +59,7 @@ fun MetricInputCard(
                 OutlinedTextField(
                     value = metric.value,
                     onValueChange = { newValue ->
-                        if (metric.keyboardType == KeyboardType.Number) {
-                            if (newValue.isNumeric()) onUpdate(metric.copy(value = newValue))
-                        } else {
-                            onUpdate(metric.copy(value = newValue))
-                        }
+                        onUpdate(metric.copy(value = newValue))
                     },
                     placeholder = { Text(metric.placeholder) },
                     keyboardOptions = KeyboardOptions(keyboardType = metric.keyboardType),
@@ -75,5 +71,3 @@ fun MetricInputCard(
         }
     }
 }
-
-private fun String.isNumeric(): Boolean = this.matches(Regex("^\\d*\\.?\\d*$"))

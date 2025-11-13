@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun FarmAdd(
     vm: FarmAddViewModel = hiltViewModel(),
-    //onSubmit: (alias: String, mainActivityCode: Int, ownerDni: String) -> Unit
+    onFarmCreated: () -> Unit = {}
 ) {
     val alias by vm.alias.collectAsState()
     val description by vm.description.collectAsState()
@@ -51,7 +51,10 @@ fun FarmAdd(
     LaunchedEffect(Unit) {
         vm.submitEvents.collectLatest { event ->
             when (event) {
-                is FarmAddEvent.Success -> Toast.makeText(context, "Granja registrada", Toast.LENGTH_SHORT).show()
+                is FarmAddEvent.Success -> {
+                    Toast.makeText(context, "Granja registrada", Toast.LENGTH_SHORT).show()
+                    onFarmCreated()
+                }
                 is FarmAddEvent.Error -> Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
             }
         }

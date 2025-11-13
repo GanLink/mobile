@@ -26,7 +26,8 @@ fun FarmHome(
     viewModel: FarmHomeViewModel,
     username: String = "Username",
     onAddFarmClick: () -> Unit = {},
-    onFarmClick: (Int) -> Unit = {}
+    onFarmClick: (Int) -> Unit = {},
+    onLogoutClick: () -> Unit = {}
 ) {
 
     val farms by viewModel.farms.collectAsState()
@@ -51,18 +52,35 @@ fun FarmHome(
                 .padding(padding)
                 .padding(horizontal = 20.dp, vertical = 16.dp)
         ) {
-            Box(modifier = Modifier
-                .clip(RoundedCornerShape(200.dp))
-                .background(MaterialTheme.colorScheme.secondaryContainer)
-                .fillMaxWidth(),
-                contentAlignment = Alignment.Center){
-                Text(
-                    text = "Welcome, $username 👋",
-                    style = MaterialTheme.typography.headlineMedium.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
-                    modifier = Modifier.padding(4.dp)
-                )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(200.dp))
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .weight(1f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Welcome, $username 👋",
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                TextButton(onClick = {
+                    viewModel.logout()
+                    onLogoutClick()
+                }) {
+                    Text(text = "Logout")
+                }
             }
 
 

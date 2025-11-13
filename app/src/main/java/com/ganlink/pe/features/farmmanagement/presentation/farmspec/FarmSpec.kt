@@ -1,38 +1,35 @@
 package com.ganlink.pe.features.farmmanagement.presentation.farmspec
 
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.ganlink.pe.R
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.ganlink.pe.features.bovinuesystem.presentation.components.BovinueCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,11 +41,13 @@ fun FarmSpec(
     onCardClick: () -> Unit = {}
 ) {
     val farm by viewModel.farm.collectAsState()
+    val bovinues by viewModel.bovinues.collectAsState()
     val alias = farm?.alias ?: "Selecciona una granja"
     val mainActivity = farm?.mainActivity ?: "Sin actividad"
     val description = farm?.description?.ifBlank { "Sin descripción disponible" }
         ?: "Sin descripción disponible"
     val owner = farm?.ownerDni ?: "Sin propietario"
+    val scrollState = rememberScrollState()
 
     Scaffold { padding ->
         Column(
@@ -56,6 +55,7 @@ fun FarmSpec(
                 .fillMaxSize()
                 .padding(padding)
                 .padding(horizontal = 20.dp, vertical = 16.dp)
+                .verticalScroll(scrollState)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -121,7 +121,7 @@ fun FarmSpec(
             Spacer(modifier = Modifier.height(28.dp))
 
             Text(
-                text = "Batches",
+                text = "Bovinues",
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.SemiBold
                 )
@@ -129,61 +129,20 @@ fun FarmSpec(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(160.dp)
-                    .clickable { onCardClick() },
-                shape = RoundedCornerShape(20.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(0.9f)
-                            .fillMaxHeight()
-                            .clip(RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp))
-                            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.image1),
-                            contentDescription = "Batch image",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .weight(1.1f)
-                            .padding(16.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column {
-                            Text(
-                                text = alias,
-                                style = MaterialTheme.typography.titleMedium.copy(
-                                    fontWeight = FontWeight.Bold
-                                ),
-                                fontSize = 18.sp
-                            )
-                            Spacer(modifier = Modifier.height(6.dp))
-                            Text(
-                                text = description,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 3
-                            )
-                        }
-
-                        Text(
-                            text = "ID: ${farm?.id ?: "-"}",
-                            style = MaterialTheme.typography.labelSmall.copy(
-                                color = MaterialTheme.colorScheme.outline
-                            )
+            if (bovinues.isEmpty()) {
+                Text(
+                    text = "No hay bovinues registrados para esta granja.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else {
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    bovinues.forEach { bovinue ->
+                        BovinueCard(
+                            title = "Bovinue #${bovinue.id}",
+                            description = description,
+                            footerText = "Farm ID: ${bovinue.farmId}",
+                            onClick = onCardClick
                         )
                     }
                 }

@@ -56,4 +56,14 @@ class FarmHomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun logout() {
+        viewModelScope.launch {
+            dao.clearAll()
+            farmDao.clearAll()
+            _farms.value = emptyList()
+            _username.value = ""
+            userId = 0
+        }
+    }
 }

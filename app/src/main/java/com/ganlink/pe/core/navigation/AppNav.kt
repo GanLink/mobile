@@ -76,6 +76,11 @@ fun AppNav(padding : PaddingValues){
                     },
                     onAddFarmClick = {
                         nav.navigate("farm_add/${farmHomeViewModel.userId}")
+                    },
+                    onLogoutClick = {
+                        nav.navigate("login") {
+                            popUpTo("login") { inclusive = true }
+                        }
                     }
                 )
             }
@@ -86,7 +91,11 @@ fun AppNav(padding : PaddingValues){
                 navArgument("userId") { type = NavType.IntType }
             )
         ) {
-            FarmAdd()
+            FarmAdd(
+                onFarmCreated = {
+                    nav.popBackStack()
+                }
+            )
         }
         composable(
             route = "farm_spec/{farmId}",
