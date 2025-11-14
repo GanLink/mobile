@@ -65,11 +65,6 @@ fun BovinueDetails() {
                     title = "Tasa de concepción (%)",
                     placeholder = "Ej: 65",
                     keyboardType = KeyboardType.Number
-                ),
-                MetricField(
-                    title = "Árbol genealógico / pedigree",
-                    placeholder = "Ej: Hija de vaca 045 y toro 103",
-                    keyboardType = KeyboardType.Text
                 )
             )
         )

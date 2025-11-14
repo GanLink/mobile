@@ -12,8 +12,10 @@ import com.ganlink.pe.features.auth.presentation.login.DelayedView
 import com.ganlink.pe.features.auth.presentation.login.Login
 import com.ganlink.pe.features.auth.presentation.register.ConfirmRegister
 import com.ganlink.pe.features.auth.presentation.register.Register
+import com.ganlink.pe.features.bovinuesystem.presentation.BovinueCreationSuccess
 import com.ganlink.pe.features.bovinuesystem.presentation.BovinueDetails
 import com.ganlink.pe.features.bovinuesystem.presentation.BovinueForm
+import com.ganlink.pe.features.bovinuesystem.presentation.BovinueMetricsInfo
 import com.ganlink.pe.features.farmmanagement.presentation.farmadd.FarmAdd
 import com.ganlink.pe.features.farmmanagement.presentation.farmhome.FarmHome
 import com.ganlink.pe.features.farmmanagement.presentation.farmhome.FarmHomeViewModel
@@ -104,9 +106,9 @@ fun AppNav(padding : PaddingValues){
             )
         ) {
             FarmSpec(
-                onAddClick = {
-                nav.navigate("bovinue_form")
-            },
+                onAddClick = { farmId ->
+                    nav.navigate("bovinue_form/$farmId")
+                },
                 onSettingsClick = {
                     nav.navigate("farm_settings")
                 },
@@ -117,11 +119,47 @@ fun AppNav(padding : PaddingValues){
         composable("farm_settings"){
             FarmSettings()
         }
-        composable("bovinue_form"){
-            BovinueForm()
+        composable(
+            route = "bovinue_form/{farmId}",
+            arguments = listOf(
+                navArgument("farmId") { type = NavType.IntType }
+            )
+        ){ backStackEntry ->
+            val farmId = backStackEntry.arguments?.getInt("farmId") ?: 0
+            BovinueForm(
+                onMetricInfoClick = {
+                    nav.navigate("bovinue_metrics_info")
+                },
+                onBovinueCreated = {
+                    nav.navigate("bovinue_success/$farmId") {
+                        popUpTo("bovinue_form/$farmId") { inclusive = true }
+                    }
+                }
+            )
         }
         composable("bovinue_details") {
             BovinueDetails()
+        }
+        composable("bovinue_metrics_info") {
+            BovinueMetricsInfo(
+                onBack = { nav.popBackStack() }
+            )
+        }
+        composable(
+            route = "bovinue_success/{farmId}",
+            arguments = listOf(
+                navArgument("farmId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val farmId = backStackEntry.arguments?.getInt("farmId") ?: 0
+            BovinueCreationSuccess(
+                onGoToFarm = {
+                    nav.navigate("farm_spec/$farmId") {
+                        popUpTo("farm_spec/$farmId") { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
     }
 }

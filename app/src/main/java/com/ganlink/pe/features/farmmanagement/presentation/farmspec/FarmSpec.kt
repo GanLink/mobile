@@ -36,7 +36,7 @@ import com.ganlink.pe.features.bovinuesystem.presentation.components.BovinueCard
 fun FarmSpec(
     viewModel: FarmSpecViewModel = hiltViewModel(),
     onSettingsClick: () -> Unit = {},
-    onAddClick: () -> Unit = {},
+    onAddClick: (Int) -> Unit = {},
     onRemoveClick: () -> Unit = {},
     onCardClick: () -> Unit = {}
 ) {
@@ -97,7 +97,9 @@ fun FarmSpec(
                     }
 
 
-                    IconButton(onClick = onAddClick) {
+                    IconButton(onClick = {
+                        farm?.id?.let { onAddClick(it) }
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = "Add",
