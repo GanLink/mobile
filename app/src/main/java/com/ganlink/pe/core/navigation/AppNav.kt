@@ -112,8 +112,8 @@ fun AppNav(padding : PaddingValues){
                 onSettingsClick = {
                     nav.navigate("farm_settings")
                 },
-                onCardClick = {
-                    nav.navigate("bovinue_details")
+                onCardClick = { bovinueId ->
+                    nav.navigate("bovinue_details/$bovinueId")
                 })
         }
         composable("farm_settings"){
@@ -137,8 +137,15 @@ fun AppNav(padding : PaddingValues){
                 }
             )
         }
-        composable("bovinue_details") {
-            BovinueDetails()
+        composable(
+            route = "bovinue_details/{bovinueId}",
+            arguments = listOf(
+                navArgument("bovinueId") { type = NavType.IntType }
+            )
+        ) {
+            BovinueDetails(
+                onBack = { nav.popBackStack() }
+            )
         }
         composable("bovinue_metrics_info") {
             BovinueMetricsInfo(

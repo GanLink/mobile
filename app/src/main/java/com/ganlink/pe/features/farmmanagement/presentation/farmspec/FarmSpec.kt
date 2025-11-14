@@ -13,7 +13,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -37,8 +36,7 @@ fun FarmSpec(
     viewModel: FarmSpecViewModel = hiltViewModel(),
     onSettingsClick: () -> Unit = {},
     onAddClick: (Int) -> Unit = {},
-    onRemoveClick: () -> Unit = {},
-    onCardClick: () -> Unit = {}
+    onCardClick: (Int) -> Unit = {}
 ) {
     val farm by viewModel.farm.collectAsState()
     val bovinues by viewModel.bovinues.collectAsState()
@@ -107,16 +105,6 @@ fun FarmSpec(
                         )
                     }
 
-                    IconButton(onClick = {
-                        viewModel.clearSelectedFarm()
-                        onRemoveClick()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Close,
-                            contentDescription = "Remove",
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                    }
                 }
             }
 
@@ -144,7 +132,7 @@ fun FarmSpec(
                             title = "Bovinue #${bovinue.id}",
                             description = description,
                             footerText = "Farm ID: ${bovinue.farmId}",
-                            onClick = onCardClick
+                            onClick = { onCardClick(bovinue.id) }
                         )
                     }
                 }
